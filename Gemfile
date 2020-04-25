@@ -25,6 +25,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
 # Use Json Web Token (JWT) for token based authentication
 gem 'jwt'
+# JSON serializer to Rails Active Model
+gem 'fast_jsonapi'
 # CPF and CNPJ utils
 gem 'cpf_cnpj'
 
