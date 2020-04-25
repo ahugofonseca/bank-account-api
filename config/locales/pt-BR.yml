@@ -1,6 +1,6 @@
 en:
   activerecord:
     models:
-      client: "Client"
+      client: "Cliente"
     attributes:
       cpf: "CPF"

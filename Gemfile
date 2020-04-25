@@ -19,10 +19,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 ###### OTHERS GEMS #############################################################
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS),
 # making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
+# Use Json Web Token (JWT) for token based authentication
+gem 'jwt'
+# JSON serializer to Rails Active Model
+gem 'fast_jsonapi'
+# CPF and CNPJ utils
+gem 'cpf_cnpj'
 
 ################################################################################
 

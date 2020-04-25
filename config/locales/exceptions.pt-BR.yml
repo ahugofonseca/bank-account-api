@@ -1,0 +1,22 @@
+pt-BR:
+  api:
+    not_applicable: Não aplicavel
+    unprocessable_entity: Não foi possível processar esta operação. Certifique-se de que os dados passados estão válidos.
+    record_not_found: Este registro não existe ou foi excluído. Verifique seus parâmetros e tente novamente ou entre em contato com o administrador do sistema.
+    internal_error: Desculpe, algo deu errado. Por favor, tente novamente ou entre em contato com o administrador do sistema.
+    invalid_password_error: A senha está errada para o CPF informado. Por favor, verifique suas credencias e tente novamente.
+    unauthorized: Desculpe, mas você não tem autorização para isto. Certifique-se que está enviando seu token de acesso e se ele está válido.
+    expired_signature: O Token de acesso expirou.
+    invalid_issuer_error: O token não possui um emissor válido.
+    invalid_iat_error: O token não possui um horário "emitido em" válido.
+
+  activerecord:
+    errors:
+      models:
+        client:
+          attributes:
+            cpf:
+              blank: não pode ficar em branco
+              too_short: "deve conter %{count} números"
+              too_long: "deve conter %{count} números"
+              taken: "%{value} já está sendo usado"
