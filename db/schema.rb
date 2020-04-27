@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_021658) do
+ActiveRecord::Schema.define(version: 2020_04_27_161016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2020_04_25_021658) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "email"
+    t.string "birth_date"
+    t.integer "gender"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.integer "referral_code"
+    t.integer "bank_account_status", default: 0
+    t.index ["cpf"], name: "index_clients_on_cpf", unique: true
+    t.index ["email"], name: "index_clients_on_email", unique: true
+    t.index ["referral_code"], name: "index_clients_on_referral_code", unique: true
   end
 
 end
