@@ -31,31 +31,21 @@ RSpec.describe 'Authentication', type: :request do
     context 'when send invalid credentials' do
       before do
         post '/api/v1/auth/login', params: {
-          authentication: { cpf: '366.012.360-18', password: '12345678' }
+          authentication: { cpf: '366.012.360-98', password: '12345678' }
         }
+      end
+
+      it 'return status not found' do
+        expect(response).to have_http_status(:unauthorized)
       end
 
       it 'return error' do
         expect(JSON.parse(response.body)['error'].present?).to eq(true)
       end
 
-      it 'return error status' do
-        expect(
-          JSON.parse(response.body).dig('error', 'status').present?
-        ).to eq(true)
-      end
-
-      it 'return error message' do
-        expect(
-          JSON.parse(response.body).dig('error', 'message').present?
-        ).to eq(true)
-      end
-
-      it 'return error details' do
-        expect(
-          JSON.parse(response.body).dig('error', 'details').present?
-        ).to eq(true)
-      end
+      it_should_behave_like('attr in error response', 'status', nil, true)
+      it_should_behave_like('attr in error response', 'message', nil, true)
+      it_should_behave_like('attr in error response', 'details', nil, true)
     end
 
     context 'when send a invalid CPF' do
@@ -68,6 +58,10 @@ RSpec.describe 'Authentication', type: :request do
       it 'return not_found status' do
         expect(response).to have_http_status(:not_found)
       end
+
+      it_should_behave_like('attr in error response', 'status', nil, true)
+      it_should_behave_like('attr in error response', 'message', nil, true)
+      it_should_behave_like('attr in error response', 'details', nil, true)
     end
 
     context 'when send invalid password' do
@@ -80,6 +74,10 @@ RSpec.describe 'Authentication', type: :request do
       it 'return unauthorized status' do
         expect(response).to have_http_status(:unauthorized)
       end
+
+      it_should_behave_like('attr in error response', 'status', nil, true)
+      it_should_behave_like('attr in error response', 'message', nil, true)
+      it_should_behave_like('attr in error response', 'details', nil, true)
     end
   end
 end
