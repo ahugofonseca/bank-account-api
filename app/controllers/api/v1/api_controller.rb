@@ -12,8 +12,12 @@ module Api
 
       def handle_exception
         yield
+      rescue DifferentCpfFromLoggedInError
+        handling_exception(:unauthorized, 'api.different_cpf_from_logged_in_error')
       rescue InvalidPasswordError
         handling_exception(:unauthorized, 'api.invalid_password_error')
+      rescue ActiveModel::ValidationError => e
+        handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
       rescue ActiveRecord::RecordInvalid => e
         handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
       rescue ActiveRecord::RecordNotFound
@@ -26,7 +30,8 @@ module Api
 
       def handling_exception(status_code, message_title, exception = 'api.not_applicable')
         error = {
-          status: Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code],
+          status: "#{Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code]}" \
+                  " - #{status_code.to_s.humanize}",
           message: I18n.t(message_title),
           details: I18n.t(exception, default: exception)
         }

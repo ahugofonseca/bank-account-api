@@ -15,6 +15,8 @@ class Client < ApplicationRecord
   enum bank_account_status: %i[not_open_yet pending complete]
 
   # Validations
+  validates :email, email: true, if: -> { email.present? }
+  validates :referral_code, uniqueness: true, if: -> { referral_code.present? }
   validates :cpf, presence: true,
                   uniqueness: true,
                   cpf: true

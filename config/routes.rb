@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'auth/login', to: 'authentication#login'
 
       resources :clients, only: :create
+      resources :bank_accounts, only: :create
     end
   end
 end

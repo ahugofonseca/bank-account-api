@@ -20,6 +20,7 @@ RSpec.describe Client, type: :model do
     # DB Indexes
     it { is_expected.to have_db_index(:cpf).unique }
     it { is_expected.to have_db_index(:email).unique }
+    it { is_expected.to have_db_index(:referral_code).unique }
 
     # Custom validations
     it 'CPF should be valid' do

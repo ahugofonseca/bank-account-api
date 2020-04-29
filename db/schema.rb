@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_161016) do
+ActiveRecord::Schema.define(version: 2020_04_27_232313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 2020_04_27_161016) do
     t.string "city"
     t.string "state"
     t.string "country"
-    t.integer "referral_code"
     t.integer "bank_account_status", default: 0
+    t.string "referral_code"
     t.index ["cpf"], name: "index_clients_on_cpf", unique: true
     t.index ["email"], name: "index_clients_on_email", unique: true
     t.index ["referral_code"], name: "index_clients_on_referral_code", unique: true
