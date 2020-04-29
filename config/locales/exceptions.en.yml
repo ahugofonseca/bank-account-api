@@ -2,10 +2,19 @@ en:
   api:
     not_applicable: Not applicable.
     unprocessable_entity: This operation could not be processed. Make sure that the data passed is valid.
-    record_not_found: This record does not exist, or has been deleted. Verify yours params, and try again or contact system administrator.
+    record_not_found: This record does not exist, or has been deleted. Please, check yours params and try again or contact system administrator.
     internal_error: Sorry, something went wrong. Please, try again or contact system administrator.
-    invalid_password_error: The password is wrong to CPF informed. Please, verify yours credentials, and try again.
+    invalid_password_error: The password is wrong to CPF informed. Please, check yours credentials, and try again.
     unauthorized: Sorry, but you unauthorized. Make sure that your access token is present and valid.
     expired_signature: The token has expired.
     invalid_issuer_error: The token does not have a valid issuer.
     invalid_iat_error: The token does not have a valid "issued at" time.
+    uuid_collision_error: It was not possible to generate a referral code. Please contact your system administrator to have this inconvenience fixed.
+    different_cpf_from_logged_in_error: The Cpf informed is not associated with your account. Please, check your params and try again.
+
+  dry_validation:
+    errors:
+      default_message: Sorry, something went wrong in initialize of class. Please, review yours params.
+      rules:
+        bank_account:
+          invalid_instance: must be a instance of Bank Account

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :client, aliases: [:bank_account_completed] do
+  factory :bank_account, aliases: [:valid_and_complete] do
     cpf                   { '366.012.360-98' }
-    password              { '123456' }
-    password_confirmation { '123456' }
     name                  { Faker::Name.name }
     email                 { Faker::Internet.unique.email }
     birth_date            { Faker::Date.birthday(min_age: 18) }
@@ -13,19 +11,22 @@ FactoryBot.define do
     state                 { Faker::Address.state }
     country               { Faker::Address.country }
     referral_code         { Faker::Alphanumeric.alphanumeric(number: 8).upcase }
-    bank_account_status   { :complete }
 
     trait :with_invalid_cpf do
       cpf { '123.456.789-00' }
     end
 
-    trait :bank_account_pending do
-      cpf                 { CPF.generate(true) }
-      gender              { nil }
-      bank_account_status { :pending }
+    trait :with_invalid_email do
+      email { 'a.com.br' }
     end
 
-    trait :bank_account_not_opened do
+    trait :account_pending do
+      cpf                 { CPF.generate(true) }
+      gender              { nil }
+      city                { nil }
+    end
+
+    trait :account_not_opened do
       cpf                 { CPF.generate(true) }
       name                { nil }
       email               { nil }
@@ -35,7 +36,6 @@ FactoryBot.define do
       state               { nil }
       country             { nil }
       referral_code       { nil }
-      bank_account_status { :not_open_yet }
     end
   end
 end

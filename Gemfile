@@ -31,6 +31,8 @@ gem 'fast_jsonapi'
 gem 'cpf_cnpj'
 # Generates attr_accessors that transparently encrypt and decrypt attributes.
 gem 'symmetric-encryption'
+# Library to validation contract objects
+gem 'dry-validation'
 
 ################################################################################
 
