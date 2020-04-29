@@ -17,7 +17,7 @@ describe Api::V1::ApiController, type: :controller do
   end
 
   before(:all) do
-    @client = FactoryBot.create(:client)
+    @client = create(:client)
   end
 
   context 'when send valid JWT' do
@@ -35,7 +35,7 @@ describe Api::V1::ApiController, type: :controller do
   describe 'invalid JWT' do
     context 'when not found resource present in JWT payload' do
       before(:all) do
-        @client_stubbed = FactoryBot.build_stubbed(:client)
+        @client_stubbed = build_stubbed(:client)
         @invalid_jwt = JsonWebToken.encode(user_id: @client_stubbed.id)
       end
 

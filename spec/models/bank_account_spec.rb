@@ -17,7 +17,7 @@ RSpec.describe BankAccount, type: :model do
 
   context 'when storage encrypt data' do
     before(:all) do
-      @client = FactoryBot.create(:client)
+      @client = create(:client)
       @raw_data = Client.connection
                         .select_all('select * from clients limit 1;').first
     end

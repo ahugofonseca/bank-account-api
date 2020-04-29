@@ -7,8 +7,8 @@ RSpec.describe 'BankAccount', type: :request do
     context 'when send different cpf from logged in' do
       before(:all) do
         # Set attributes
-        client = FactoryBot.build_stubbed(:client)
-        client2 = FactoryBot.create(:client, cpf: '691.605.320-84')
+        client = build_stubbed(:client)
+        client2 = create(:client, cpf: '691.605.320-84')
 
         # Make request
         valid_jwt = JsonWebToken.encode(user_id: client2.id)
@@ -29,7 +29,7 @@ RSpec.describe 'BankAccount', type: :request do
     context 'when complete the opening bank account' do
       before(:all) do
         # Clients with Bank Account pending
-        bank_account_pending = FactoryBot.create(:client, :bank_account_pending)
+        bank_account_pending = create(:client, :bank_account_pending)
 
         # Make request
         valid_jwt = JsonWebToken.encode(user_id: bank_account_pending.id)
@@ -61,7 +61,7 @@ RSpec.describe 'BankAccount', type: :request do
       before(:all) do
         # Clients with Bank Account pending
         bank_account_not_opened =
-          FactoryBot.create(:client, :bank_account_not_opened)
+          create(:client, :bank_account_not_opened)
 
         # Make request
         valid_jwt = JsonWebToken.encode(user_id: bank_account_not_opened.id)

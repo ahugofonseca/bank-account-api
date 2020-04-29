@@ -24,14 +24,14 @@ RSpec.describe Client, type: :model do
 
     # Custom validations
     it 'CPF should be valid' do
-      client = FactoryBot.build_stubbed(:client)
+      client = build_stubbed(:client)
       expect(CPF.valid?(client.cpf)).to be(true)
     end
   end
 
   context 'when create a client with invalid CPF' do
     let!(:client_with_invalid_cpf) do
-      FactoryBot.build_stubbed(:client, :with_invalid_cpf)
+      build_stubbed(:client, :with_invalid_cpf)
     end
 
     it 'should be consider invalid client' do
@@ -46,7 +46,7 @@ RSpec.describe Client, type: :model do
 
   context 'when storage encrypt data' do
     before(:all) do
-      @client = FactoryBot.create(:client)
+      @client = create(:client)
       @raw_data = Client.connection
                         .select_all('select * from clients limit 1;').first
     end

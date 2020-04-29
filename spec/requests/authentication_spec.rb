@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Authentication', type: :request do
   describe 'POST /auth/login' do
     before(:all) do
-      @client = FactoryBot.create(:client)
+      @client = create(:client)
     end
 
     context 'when send a valid credentials' do
