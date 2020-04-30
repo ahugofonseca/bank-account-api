@@ -33,6 +33,8 @@ gem 'cpf_cnpj'
 gem 'symmetric-encryption'
 # Library to validation contract objects
 gem 'dry-validation'
+# Documentation API with Swagger + RSpec
+gem 'rswag'
 
 ################################################################################
 
