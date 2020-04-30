@@ -29,6 +29,10 @@ gem 'jwt'
 gem 'fast_jsonapi'
 # CPF and CNPJ utils
 gem 'cpf_cnpj'
+# Generates attr_accessors that transparently encrypt and decrypt attributes.
+gem 'symmetric-encryption'
+# Library to validation contract objects
+gem 'dry-validation'
 
 ################################################################################
 
@@ -58,4 +62,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "rack-attack", "~> 6.3"
+gem 'rack-attack', '~> 6.3'

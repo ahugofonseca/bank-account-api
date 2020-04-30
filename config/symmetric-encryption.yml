@@ -1,0 +1,14 @@
+---
+development:
+  ciphers:
+  - key: <%= Rails.application.credentials.development[:symmetric_encryption][:key] %>
+    iv: <%= Rails.application.credentials.development[:symmetric_encryption][:iv] %>
+    cipher_name: <%= Rails.application.credentials.development[:symmetric_encryption][:cipher_name] %>
+    version: <%= Rails.application.credentials.development[:symmetric_encryption][:version] %>
+
+test:
+  ciphers:
+  - key: <%= Rails.application.credentials.test[:symmetric_encryption][:key] %>
+    iv: <%= Rails.application.credentials.test[:symmetric_encryption][:iv] %>
+    cipher_name: <%= Rails.application.credentials.test[:symmetric_encryption][:cipher_name] %>
+    version: <%= Rails.application.credentials.test[:symmetric_encryption][:version] %>

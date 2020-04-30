@@ -23,7 +23,7 @@ module Api
       end
 
       def cpf_param
-        CPF.new(login_params[:cpf]).stripped
+        CPF.new(login_params[:cpf]).formatted
       end
 
       def client_authenticated?

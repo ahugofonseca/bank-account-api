@@ -10,7 +10,7 @@ module Authenticatable
 
   def authenticate_request!
     @auth_payload, @auth_header = validate_authentication
-    Client.find(@auth_payload[:user_id])
+    current_client
   rescue ActiveRecord::RecordNotFound
     handling_exception(:not_found, 'api.record_not_found')
   rescue JWT::VerificationError, JWT::DecodeError
@@ -24,6 +24,10 @@ module Authenticatable
   end
 
   private
+
+  def current_client
+    @current_client ||= Client.find(@auth_payload[:user_id])
+  end
 
   def http_token
     request.headers['Authorization']&.split(' ')&.last

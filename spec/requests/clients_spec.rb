@@ -17,23 +17,9 @@ RSpec.describe 'Clients', type: :request do
         expect(JSON.parse(response.body)['error'].present?).to eq(true)
       end
 
-      it 'return error status' do
-        expect(
-          JSON.parse(response.body).dig('error', 'status').present?
-        ).to eq(true)
-      end
-
-      it 'return error message' do
-        expect(
-          JSON.parse(response.body).dig('error', 'message').present?
-        ).to eq(true)
-      end
-
-      it 'return error details' do
-        expect(
-          JSON.parse(response.body).dig('error', 'details').present?
-        ).to eq(true)
-      end
+      it_should_behave_like('attr in error response', 'status', nil, true)
+      it_should_behave_like('attr in error response', 'message', nil, true)
+      it_should_behave_like('attr in error response', 'details', nil, true)
 
       it 'return not_found status' do
         expect(response).to have_http_status(:unprocessable_entity)

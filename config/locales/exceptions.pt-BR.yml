@@ -9,6 +9,8 @@ pt-BR:
     expired_signature: O Token de acesso expirou.
     invalid_issuer_error: O token não possui um emissor válido.
     invalid_iat_error: O token não possui um horário "emitido em" válido.
+    uuid_collision_error: Não foi possível gerar um código de indicação. Por favor, contate o adminstrador do sistema para que este incoveniente seja reparado.
+    different_cpf_from_logged_in_error: O CPF informado não está associado à sua conta. Por favor, verifique seus parâmetros e tente novamente.
 
   activerecord:
     errors:
@@ -20,3 +22,17 @@ pt-BR:
               too_short: "deve conter %{count} números"
               too_long: "deve conter %{count} números"
               taken: "%{value} já está sendo usado"
+
+  activemodel:
+    errors:
+      messages:
+        record_invalid: 'Falha na validação dos dados: %{errors}'
+
+  dry_validation:
+    errors:
+      default_message: Desculpe, algo deu errado na inicialização da classe. Por favor, revise os parâmetros passados.
+      rules:
+        bank_account:
+          invalid_instance: deve ser uma instancia de Bank Account
+        referral_code:
+          invalid_value: deve ser um código existente
