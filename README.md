@@ -26,6 +26,8 @@ Technical challenge to Engineering Backend position
 1. Run `rails server`
 2. Open `http://localhost:3000/api-docs/index.html`
 
+![Overview usage](api_documentation.gif)
+
 ### Usage
 1. Run `rails server`
 2. Read API Documentation
@@ -74,6 +76,9 @@ Technical challenge to Engineering Backend position
 Services objects aim to minimize high coupling. Just extract important use cases from Rails models. You are more free to model your use cases according to the context.
 
 2. Basic funcionality:
+
+![Usage eg.](application_services_usage.gif)
+
 Every service must have 4 basic implementations: (based in a book: Confident Ruby - Avdi Grimm)
   - Collecting and validate input
   - Performing works
@@ -81,6 +86,9 @@ Every service must have 4 basic implementations: (based in a book: Confident Rub
   - Handling failures
 
 3. Details:
+
+![Overview](application_services_overview)
+
   - Collecting and validate input:
     - I implemented the module to be used as a mixin called Validable. This module will perform a class contract validation after the initialization of each service.
 
