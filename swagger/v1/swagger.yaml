@@ -1,0 +1,314 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/auth/login":
+    post:
+      summary: Authenticates with basic auth
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: Valid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  expires_at:
+                    type: string
+                required:
+                - access_token
+                - expires_at
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+        '404':
+          description: not_found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                password:
+                  type: string
+              required:
+              - cpf
+              - password
+  "/api/v1/bank_accounts":
+    post:
+      summary: Open or Update a bank account
+      tags:
+      - Bank Account
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: bank account opened
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  bank_account:
+                    type: string
+                  referral_code:
+                    type: string
+                required:
+                - message
+                - bank_account
+        '401':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+        '404':
+          description: not_found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+                birth_date:
+                  type: string
+                gender:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                referral_code:
+                  type: string
+              required:
+              - cpf
+  "/api/v1/clients":
+    post:
+      summary: Creates a client
+      tags:
+      - Client
+      parameters: []
+      responses:
+        '201':
+          description: client created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          cpf:
+                            type: string
+                          create_at:
+                            type: string
+                required:
+                - message
+                - bank_account
+        '422':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - cpf
+              - password
+              - password_confirmation
+  "/api/v1/clients/my_indications":
+    get:
+      summary: Listing my indications
+      tags:
+      - Client
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: indications list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+        '403':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: string
+                    required:
+                    - status
+                    - message
+                    - details
+                required:
+                - error
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -35,6 +35,10 @@ RSpec.describe 'Clients', type: :request do
         }
       end
 
+      it 'returns a ok status' do
+        expect(response).to have_http_status(:created)
+      end
+
       it 'returns data' do
         expect(JSON.parse(response.body)['data'].present?).to eq(true)
       end

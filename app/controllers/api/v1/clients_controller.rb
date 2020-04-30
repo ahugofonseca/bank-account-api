@@ -10,7 +10,8 @@ module Api
         @client = Client.new(client_params)
         @client.save!
 
-        render json: ClientSerializer.new(@client).serialized_json
+        render json: ClientSerializer.new(@client).serialized_json,
+               status: :created
       end
 
       def my_indications
