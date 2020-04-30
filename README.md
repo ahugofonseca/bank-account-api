@@ -87,7 +87,7 @@ Every service must have 4 basic implementations: (based in a book: Confident Rub
 
 3. Details:
 
-![Overview](application_services_overview)
+![Overview](application_services_overview.gif)
 
   - Collecting and validate input:
     - I implemented the module to be used as a mixin called Validable. This module will perform a class contract validation after the initialization of each service.

@@ -6,6 +6,7 @@ module Authenticatable
 
   included do
     before_action :authenticate_request!
+    alias_method :current_user, :current_client
   end
 
   def authenticate_request!

@@ -15,6 +15,8 @@ module Api
       end
 
       def my_indications
+        authorize current_client
+
         @guests = current_client.guests
 
         render json: GuestSerializer.new(@guests).serialized_json

@@ -35,6 +35,8 @@ gem 'symmetric-encryption'
 gem 'dry-validation'
 # Documentation API with Swagger + RSpec
 gem 'rswag'
+# Authorization policies
+gem 'pundit'
 
 ################################################################################
 

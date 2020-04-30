@@ -16,6 +16,8 @@ module Api
         handling_exception(:unauthorized, 'api.different_cpf_from_logged_in_error')
       rescue InvalidPasswordError
         handling_exception(:unauthorized, 'api.invalid_password_error')
+      rescue Pundit::NotAuthorizedError => e
+        handling_exception(:unauthorized, 'api.unauthorized', e.message)
       rescue ActiveModel::ValidationError => e
         handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
       rescue ActiveRecord::RecordInvalid => e
