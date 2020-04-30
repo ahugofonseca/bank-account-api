@@ -54,34 +54,54 @@ RSpec.describe 'Clients', type: :request do
   end
 
   describe 'GET /clients/my_indications' do
-    before do
-      inviter = create(:client)
-      valid_jwt = JsonWebToken.encode(user_id: inviter.id)
+    context 'when client is complete registration' do
+      before do
+        inviter = create(:client)
+        valid_jwt = JsonWebToken.encode(user_id: inviter.id)
 
-      create(:client, :bank_account_pending, inviter: inviter)
+        create(:client, :bank_account_pending, inviter: inviter)
 
-      get my_indications_api_v1_clients_url,
-          headers: { 'Authorization': valid_jwt }
+        get my_indications_api_v1_clients_url,
+            headers: { 'Authorization': valid_jwt }
+      end
+
+      it 'returns a ok status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns a list of guests' do
+        expect(JSON.parse(response.body).dig('data').is_a?(Array)).to be_truthy
+      end
+
+      it 'return ids of the guests' do
+        expect(
+          JSON.parse(response.body).dig('data').pluck('id').present?
+        ).to be_truthy
+      end
+
+      it 'return names of the guests' do
+        expect(
+          JSON.parse(response.body).dig('data').pluck('name').present?
+        ).to be_truthy
+      end
     end
 
-    it 'returns a ok status' do
-      expect(response).to have_http_status(:ok)
-    end
+    context 'when client dont finished registration' do
+      before do
+        inviter = create(:client, :bank_account_pending)
+        valid_jwt = JsonWebToken.encode(user_id: inviter.id)
 
-    it 'returns a list of guests' do
-      expect(JSON.parse(response.body).dig('data').is_a?(Array)).to be_truthy
-    end
+        get my_indications_api_v1_clients_url,
+            headers: { 'Authorization': valid_jwt }
+      end
 
-    it 'return ids of the guests' do
-      expect(
-        JSON.parse(response.body).dig('data').pluck('id').present?
-      ).to be_truthy
-    end
+      it 'returns a ok status' do
+        expect(response).to have_http_status(:unauthorized)
+      end
 
-    it 'return names of the guests' do
-      expect(
-        JSON.parse(response.body).dig('data').pluck('name').present?
-      ).to be_truthy
+      it_should_behave_like('attr in error response', 'status', nil, true)
+      it_should_behave_like('attr in error response', 'message', nil, true)
+      it_should_behave_like('attr in error response', 'details', nil, true)
     end
   end
 end
