@@ -103,28 +103,28 @@ Every service must have 4 basic implementations: (based in a book: Confident Rub
 
     - Use Cases: read about [Use Case](https://martinfowler.com/bliki/UseCase.html)
 
-    - It will be necessary implement 3 private methods:
+    - It will be necessary implement 2 private methods used in `call`:
       - #execute_specifications
       - #execute_use_case
-      - #use_case_response
 
   - Delivering output
     - Implement `#use_case_response` private methods
     - Used to format response of the use case
 
   - Handling failures
+    - Dry Validation helps to handle errors
     - Don't forget to handle exceptions
 
 #### Others observations:
 1. Exceptions
-  - It was created a new directory to save all exceptions class
-  - Using I18n to tranlate messages
-  - Use `:around_action` in ApiController to handle with all exceptions of the API
+    - It was created a new directory to save all exceptions class
+    - Using I18n to tranlate messages
+    - Use `:around_action` in ApiController to handle with all exceptions of the API
 
 2. Types
-  - It was created a new directory to save all custom types.
-  - Used in ActiveRecord API
+    - It was created a new directory to save all custom types.
+    - Used in ActiveRecord API
 
 3. Custom Validation
-  - It was created a new directory to save all custom validations
-  - Created CPFValidator and EmailValidator
+    - It was created a new directory to save all custom validations
+    - Created CPFValidator and EmailValidator
