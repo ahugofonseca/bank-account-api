@@ -13,6 +13,12 @@ module Api
         render json: ClientSerializer.new(@client).serialized_json
       end
 
+      def my_indications
+        @guests = current_client.guests
+
+        render json: GuestSerializer.new(@guests).serialized_json
+      end
+
       private
 
       def client_params
