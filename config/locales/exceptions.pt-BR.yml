@@ -31,3 +31,8 @@ pt-BR:
   dry_validation:
     errors:
       default_message: Desculpe, algo deu errado na inicialização da classe. Por favor, revise os parâmetros passados.
+      rules:
+        bank_account:
+          invalid_instance: deve ser uma instancia de Bank Account
+        referral_code:
+          invalid_value: deve ser um código existente

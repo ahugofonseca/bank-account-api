@@ -27,7 +27,9 @@ class BankAccount
   end
 
   # Use cases
-  def open_or_update_account
-    BankAccounts::UseCases::CreateOrUpdateService.new(self)
+  def open_or_update_account(referral_code = nil)
+    BankAccounts::UseCases::CreateOrUpdateService.new(
+      bank_account: self, referral_code: referral_code
+    )
   end
 end

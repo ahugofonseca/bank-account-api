@@ -4,8 +4,9 @@ module BankAccounts
   module UseCases
     # Use case responsible to create or update BankAccount to Client
     class CreateOrUpdateService < ApplicationService
-      def initialize(bank_account)
-        @bank_account = bank_account
+      def initialize(**args)
+        @bank_account = args.dig(:bank_account)
+        @referral_code = args.dig(:referral_code)
       end
 
       private
@@ -26,6 +27,7 @@ module BankAccounts
         set_bank_account
         set_account_status
         set_referral_code
+        set_association_with_inviter
 
         client_account.save!
       rescue ActiveRecord::RecordInvalid
@@ -52,12 +54,19 @@ module BankAccounts
         return unless client_account.complete?
         return if client_account.referral_code.present?
 
-        10.times do
-          referral_code = SecureRandom.alphanumeric(8).upcase
+        10.times { break if Client.find_by(referral_code: token).blank? }
 
-          break if Client.find_by(referral_code: referral_code).blank?
-        end
-        client_account.referral_code = referral_code
+        client_account.referral_code = token
+      end
+
+      def token
+        SecureRandom.alphanumeric(8).upcase
+      end
+
+      def set_association_with_inviter
+        return if @referral_code.nil?
+
+        client_account.inviter = Client.find_by!(referral_code: @referral_code)
       end
 
       # USE CASE RESPONSE

@@ -14,12 +14,20 @@ class Client < ApplicationRecord
   enum gender: %i[male female other]
   enum bank_account_status: %i[not_open_yet pending complete]
 
+  # Associations
+  belongs_to :inviter, class_name: 'Client', optional: true
+  has_many :guests, class_name: 'Client', foreign_key: 'inviter_id'
+
   # Validations
   validates :email, email: true, if: -> { email.present? }
-  validates :referral_code, uniqueness: true, if: -> { referral_code.present? }
+  validates :referral_code, uniqueness: true,
+                            length: { minimum: 8, maximum: 8 },
+                            if: -> { referral_code.present? }
+
   validates :cpf, presence: true,
                   uniqueness: true,
-                  cpf: true
+                  cpf: true,
+                  length: { minimum: 11, maximum: 14 }
 
   # Methods
   def bank_account

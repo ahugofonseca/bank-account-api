@@ -20,8 +20,10 @@ module Api
         handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
       rescue ActiveRecord::RecordInvalid => e
         handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
-      rescue ActiveRecord::RecordNotFound
-        handling_exception(:not_found, 'api.record_not_found')
+      rescue ActiveRecord::RecordNotUnique => e
+        handling_exception(:unprocessable_entity, 'api.unprocessable_entity', e)
+      rescue ActiveRecord::RecordNotFound => e
+        handling_exception(:not_found, 'api.record_not_found', e)
       rescue StandardError => e
         handling_exception(:internal_server_error, 'api.internal_error', e)
       end

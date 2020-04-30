@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe BankAccounts::UseCases::CreateOrUpdateService do
   let!(:client) { create(:client, :bank_account_pending) }
+  let!(:inviter) { create(:client) }
 
   describe 'when it runs successfully ' do
     context 'when update all data' do
@@ -73,15 +74,41 @@ RSpec.describe BankAccounts::UseCases::CreateOrUpdateService do
         expect(service.response.key?(:bank_account)).to be_truthy
       end
     end
+
+    context 'when passed a valid referral_code' do
+      let(:referral_code) { inviter.referral_code }
+      let(:bank_account) { build(:bank_account, cpf: client.cpf) }
+      let(:service) { bank_account.open_or_update_account(referral_code) }
+
+      it 'create association with inviter' do
+        service.call && client.reload && inviter.reload
+        expect(client.inviter).to eq(inviter)
+      end
+    end
   end
 
   describe 'when it runs faulty' do
+    context 'when passed invalid referral_code' do
+      let(:referral_code) { SecureRandom.uuid }
+      let(:bank_account) { build(:bank_account, cpf: client.cpf) }
+
+      it 'return RecordNotFound exception' do
+        expect do
+          BankAccounts::UseCases::CreateOrUpdateService.new(
+            bank_account: bank_account, referral_code: referral_code
+          ).call
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context 'when dont passed instance of Bank Account' do
       let(:bank_account) { 'string instance' }
 
       it 'return service contract exception' do
         expect do
-          BankAccounts::UseCases::CreateOrUpdateService.new(bank_account)
+          BankAccounts::UseCases::CreateOrUpdateService.new(
+            bank_account: bank_account
+          )
         end.to raise_error(ServiceContractError)
       end
     end

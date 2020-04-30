@@ -10,8 +10,8 @@ module ValidableContract
     class << base_service
       alias_method :_new, :new
 
-      define_method :new do |args|
-        _new(args).tap do |instance|
+      define_method :new do |**args, &block|
+        _new(args, &block).tap do |instance|
           instance.send(:after_initialize, args)
         end
       end
@@ -22,7 +22,7 @@ module ValidableContract
   def validate_contract_class!(args)
     raise NotImplementedError if service_contract.nil?
 
-    inputs_validation = service_contract.call(params(args))
+    inputs_validation = service_contract.call(args)
 
     return if inputs_validation.success?
 
@@ -31,10 +31,5 @@ module ValidableContract
 
   def service_contract
     self.class.to_s.gsub('UseCases', 'ServiceContracts').safe_constantize&.new
-  end
-
-  # NOTE: Dry Validation works with hash params
-  def params(args)
-    args.is_a?(Hash) ? args : { "#{args.class.to_s.underscore}": args }
   end
 end

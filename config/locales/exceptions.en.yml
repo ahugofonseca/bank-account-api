@@ -18,3 +18,5 @@ en:
       rules:
         bank_account:
           invalid_instance: must be a instance of Bank Account
+        referral_code:
+          invalid_value: must be valid and exist

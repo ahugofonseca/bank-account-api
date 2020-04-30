@@ -24,6 +24,7 @@ FactoryBot.define do
       cpf                 { CPF.generate(true) }
       gender              { nil }
       city                { nil }
+      referral_code       { nil }
     end
 
     trait :account_not_opened do

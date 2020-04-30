@@ -22,6 +22,7 @@ FactoryBot.define do
     trait :bank_account_pending do
       cpf                 { CPF.generate(true) }
       gender              { nil }
+      referral_code       { nil }
       bank_account_status { :pending }
     end
 

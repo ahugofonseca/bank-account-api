@@ -18,7 +18,11 @@ module Api
       def bank_account_params
         params.require(:bank_account)
               .permit(:name, :email, :cpf, :birth_date, :gender, :city, :state,
-                      :country, :referral_code)
+                      :country)
+      end
+
+      def referral_code_params
+        params.require(:bank_account).permit(:referral_code)
       end
 
       def ensure_account_creation_by_yourself
@@ -30,7 +34,9 @@ module Api
       end
 
       def bank_account_service
-        @bank_account_service ||= @bank_account.open_or_update_account
+        @bank_account_service ||= @bank_account.open_or_update_account(
+          referral_code_params.dig(:referral_code)
+        )
       end
     end
   end
