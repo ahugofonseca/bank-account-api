@@ -38,36 +38,46 @@ RSpec.describe 'Clients', type: :request do
       it 'returns data' do
         expect(JSON.parse(response.body)['data'].present?).to eq(true)
       end
-      it 'returns id in data' do
-        expect(
-          JSON.parse(response.body).dig('data', 'id').present?
-        ).to eq(true)
-      end
-      it 'returns type in data' do
-        expect(
-          JSON.parse(response.body).dig('data', 'type').present?
-        ).to eq(true)
-      end
-      it 'returns attributes in data' do
-        expect(
-          JSON.parse(response.body).dig('data', 'attributes').present?
-        ).to eq(true)
-      end
-      it 'returns id in attributes' do
-        expect(
-          JSON.parse(response.body).dig('data', 'attributes', 'id').present?
-        ).to eq(true)
-      end
-      it 'returns CPF in attributes' do
-        expect(
-          JSON.parse(response.body).dig('data', 'attributes', 'cpf').present?
-        ).to eq(true)
-      end
-      it 'returns created_at in attributes' do
-        expect(
-          JSON.parse(response.body).dig('data', 'attributes', 'created_at').present?
-        ).to eq(true)
-      end
+
+      it_should_behave_like('attr in success response', 'id')
+      it_should_behave_like('attr in success response', 'type')
+      it_should_behave_like('attr in success response', 'attributes')
+
+      it_should_behave_like('attr in success response', 'attributes', 'id')
+      it_should_behave_like('attr in success response', 'attributes', 'cpf')
+      it_should_behave_like('attr in success response', 'attributes', 'created_at')
+    end
+  end
+
+  describe 'GET /clients/my_indications' do
+    before do
+      inviter = create(:client)
+      valid_jwt = JsonWebToken.encode(user_id: inviter.id)
+
+      create(:client, :bank_account_pending, inviter: inviter)
+
+      get my_indications_api_v1_clients_url,
+          headers: { 'Authorization': valid_jwt }
+    end
+
+    it 'returns a ok status' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns a list of guests' do
+      expect(JSON.parse(response.body).dig('data').is_a?(Array)).to be_truthy
+    end
+
+    it 'return ids of the guests' do
+      expect(
+        JSON.parse(response.body).dig('data').pluck('id').present?
+      ).to be_truthy
+    end
+
+    it 'return names of the guests' do
+      expect(
+        JSON.parse(response.body).dig('data').pluck('name').present?
+      ).to be_truthy
     end
   end
 end
