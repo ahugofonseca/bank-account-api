@@ -41,6 +41,7 @@ gem 'rswag'
 group :development, :test do
   gem 'pry'
   gem 'pry-rails'
+  gem 'rails-erd'
 end
 
 group :test do
