@@ -10,8 +10,25 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Which bundler?
+          name: Run bundler
           command: |
             gem install bundler:2.0.2
             bundle -v
             bundle install
+
+  backend-tests:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Install ruby dependencies
+          command: |
+            gem update --system
+            gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths: vendor/bundle
+          key: v1.2-dependencies-bundler-{{ arch }}-{{ checksum "Gemfile" }}
