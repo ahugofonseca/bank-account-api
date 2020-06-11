@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
+  ruby: circleci/ruby@0.1.2
 
 jobs:
   build:
@@ -11,5 +11,7 @@ jobs:
       - checkout
       - run:
           name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          command: |
+            gem install bundler:2.0.2
+            bundle -v
+            bundle install
